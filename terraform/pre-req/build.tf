@@ -39,32 +39,6 @@ module "nsg" {
   tags = module.rg.rg_tags
 }
 
-module "bastion" {
-  source = "registry.terraform.io/libre-devops/bastion/azurerm"
-
-  vnet_rg_name = module.network.vnet_rg_name
-  vnet_name    = module.network.vnet_name
-
-  bas_subnet_iprange = "10.0.13.0/28"
-
-  bas_nsg_name     = "nsg-bas-${var.short}-${var.loc}-${terraform.workspace}-01"
-  bas_nsg_location = module.rg.rg_location
-  bas_nsg_rg_name  = module.rg.rg_name
-
-  bas_pip_name              = "pip-bas-${var.short}-${var.loc}-${terraform.workspace}-01"
-  bas_pip_location          = module.rg.rg_location
-  bas_pip_rg_name           = module.rg.rg_name
-  bas_pip_allocation_method = "Static"
-  bas_pip_sku               = "Standard"
-
-  bas_host_name          = "bas-${var.short}-${var.loc}-${terraform.workspace}-01"
-  bas_host_location      = module.rg.rg_location
-  bas_host_rg_name       = module.rg.rg_name
-  bas_host_ipconfig_name = "bas-${var.short}-${var.loc}-${terraform.workspace}-01-ipconfig"
-
-  tags = module.rg.rg_tags
-}
-
 module "app_network" {
   source = "registry.terraform.io/libre-devops/network/azurerm"
 
@@ -90,12 +64,11 @@ resource "azurerm_network_interface" "nics" {
   name                = "nic-test${terraform.workspace}${format("%02d", count.index + 1)}"
   location            = module.rg.rg_location
   resource_group_name = module.rg.rg_name
+  tags                = module.rg.rg_tags
 
   ip_configuration {
     name                          = "nic${count.index}conf"
     subnet_id                     = element(values(module.network.subnets_ids), 2)
     private_ip_address_allocation = "Dynamic"
   }
-
-  tags                            = module.rg.rg_tags
 }
