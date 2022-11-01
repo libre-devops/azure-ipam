@@ -72,7 +72,7 @@ module "app_network" {
   location = module.rg.rg_location
   tags     = module.rg.rg_tags
 
-  vnet_name     = "vnet-${var.short}-${var.loc}-${terraform.workspace}-01" // vnet-ldo-euw-dev-01
+  vnet_name     = "vnet-${var.short}-${var.loc}-${terraform.workspace}-02" // vnet-ldo-euw-dev-01
   vnet_location = module.network.vnet_location
 
   address_space   = ["10.0.0.0/16"]
