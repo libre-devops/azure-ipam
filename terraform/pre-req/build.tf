@@ -18,7 +18,7 @@ module "network" {
   vnet_name     = "vnet-${var.short}-${var.loc}-${terraform.workspace}-01" // vnet-ldo-euw-dev-01
   vnet_location = module.network.vnet_location
 
-  address_space   = ["10.0.10.0/21"]
+  address_space   = ["10.0.8.0/21"]
   subnet_prefixes = ["10.0.10.0/24", "10.0.11.0/24", "10.0.12.0/24"]
   subnet_names    = ["sn1-${module.network.vnet_name}", "sn2-${module.network.vnet_name}", "sn3-${module.network.vnet_name}"] //sn1-vnet-ldo-euw-dev-01
   subnet_service_endpoints = {
