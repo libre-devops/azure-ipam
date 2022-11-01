@@ -87,7 +87,7 @@ module "app_network" {
 
 resource "azurerm_network_interface" "nics" {
   count               = 10
-  name                = "nic-test-${terraform.workspace}-${format("%02d", count.index + 1)}"
+  name                = "nic-${terraform.workspace}-${format("%02d", count.index + 1)}"
   location            = module.rg.rg_location
   resource_group_name = module.rg.rg_name
 
