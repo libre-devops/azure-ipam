@@ -87,7 +87,7 @@ module "app_network" {
 
 resource "azurerm_network_interface" "nics" {
   count               = 10
-  name                = "nic${count.index}"
+  name                = "nic-test-${terraform.workspace}-${format("%02d", count.index + 1)}"
   location            = module.rg.rg_location
   resource_group_name = module.rg.rg_name
 
@@ -96,4 +96,6 @@ resource "azurerm_network_interface" "nics" {
     subnet_id                     = element(values(module.network.subnets_ids), 2)
     private_ip_address_allocation = "Dynamic"
   }
+
+  tags                            = module.rg.rg_tags
 }
